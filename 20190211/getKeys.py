@@ -10,11 +10,9 @@ from email.mime.multipart import MIMEMultipart
 
 from email.mime.application import MIMEApplication
 
-date = time.strftime('%Y%m%d', time.localtime(time.time()))
-filedirectory = "/opt/python" + os.path.sep + date
 #filedirectory = "F:\\简书\\python\\pythoncharm" + os.path.sep + date
 
-def getSuggest(key=""):
+def getSuggest(key,date,filedirectory):
     try:
         SUGGESTURL = "https://suggest.taobao.com/sug?code=utf-8&q="
         SUGGESTURL = SUGGESTURL + key
@@ -28,13 +26,13 @@ def getSuggest(key=""):
         l.close()
 
 
-def generatecsv():
+def generatecsv(date,filedirectory):
     if not os.path.exists(filedirectory):
         os.mkdir(filedirectory)
     filename = filedirectory + os.path.sep + date + ".csv"
     f = open(filename,'w',encoding='utf-8-sig')
     try:
-        items = getSuggest("水杯")
+        items = getSuggest("水杯",date,filedirectory)
         writer = csv.writer(f)
         writer.writerow(["推荐词","商品代号"])
         for row in items:
@@ -51,7 +49,7 @@ def generatecsv():
         f.close()
 
 
-def sendEmail():
+def sendEmail(date,filedirectory):
     filename = filedirectory + os.path.sep + date + ".csv"
     # 第三方 SMTP 服务
     mail_host = "smtp.163.com"  # SMTP服务器
@@ -86,10 +84,12 @@ def sendEmail():
 
 
 def dailywork():
-    generatecsv()
-    sendEmail()
+    date = time.strftime('%Y%m%d', time.localtime(time.time()))
+    filedirectory = "/opt/python" + os.path.sep + date
+    generatecsv(date,filedirectory)
+    sendEmail(date,filedirectory)
 
 if __name__ == "__main__":
-    schedule.every(1).day.at("00:00").do(dailywork)
+    schedule.every(1).day.at("00:01").do(dailywork)
     while True:
         schedule.run_pending()

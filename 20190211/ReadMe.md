@@ -11,7 +11,7 @@
 关于各部分的代码如下
 ##获取关键字建议词
 ```python
-def getSuggest(key=""):
+def getSuggest(key,date,filedirectory):
     try:
         SUGGESTURL = "https://suggest.taobao.com/sug?code=utf-8&q="
         SUGGESTURL = SUGGESTURL + key
@@ -27,13 +27,13 @@ def getSuggest(key=""):
 使用requests模块直接获取建议词，将结果中json数据拿去出来，出错时将错误栈内容记录进日志中。
 ##将获取的建议词写入csv
 ```python
-def generatecsv():
+def generatecsv(date,filedirectory):
     if not os.path.exists(filedirectory):
         os.mkdir(filedirectory)
     filename = filedirectory + os.path.sep + date + ".csv"
     f = open(filename,'w',encoding='utf-8-sig')
     try:
-        items = getSuggest("水杯")
+        items = getSuggest("水杯",date,filedirectory)
         writer = csv.writer(f)
         writer.writerow(["推荐词","商品代号"])
         for row in items:
@@ -52,7 +52,8 @@ def generatecsv():
 将内容以utf-8的编码写入csv中，出错时将错误栈内容记录进日志中。
 ##将csv加入邮件附件发送
 ```python
-def sendEmail():
+def sendEmail(date,filedirectory):
+    filename = filedirectory + os.path.sep + date + ".csv"
     # 第三方 SMTP 服务
     mail_host = "smtp.163.com"  # SMTP服务器
     mail_user = "jackwuchenghao@163.com"  # 用户名
@@ -74,7 +75,13 @@ def sendEmail():
         smtpserver.login(mail_user, mail_pass)  # 登录验证
         smtpserver.sendmail(sender, receivers, m.as_string())  # 发送
     except:
-        #...
+        logfilepath = filedirectory + os.path.sep + date + ".log"
+        print(logfilepath)
+        logfile = open(logfilepath,'a')
+        logfile.writelines(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))+os.linesep)
+        traceback.print_exc(file=logfile)
+        logfile.flush()
+        logfile.close()
     finally:
         smtpserver.quit()
 ```

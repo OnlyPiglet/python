@@ -54,7 +54,7 @@ def sendEmail(date,filedirectory):
     # 第三方 SMTP 服务
     mail_host = "smtp.163.com"  # SMTP服务器
     mail_user = "jackwuchenghao@163.com"  # 用户名
-    mail_pass = "4553283wch"  # 授权密码，非登录密码
+    mail_pass = "*******"  # 授权密码，非登录密码
     sender ="jackwuchenghao@163.com" # 发件人邮箱(最好写全, 不然会失败)
     receivers = ['jackwuchenghao@163.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
     content = "this is the new suggest about 水杯"

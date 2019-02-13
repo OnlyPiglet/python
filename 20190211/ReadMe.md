@@ -57,7 +57,7 @@ def sendEmail(date,filedirectory):
     # 第三方 SMTP 服务
     mail_host = "smtp.163.com"  # SMTP服务器
     mail_user = "jackwuchenghao@163.com"  # 用户名
-    mail_pass = "4553283wch"  # 授权密码，非登录密码
+    mail_pass = "********"  # 授权密码，非登录密码
     sender ="jackwuchenghao@163.com" # 发件人邮箱(最好写全, 不然会失败)
     receivers = ['jackwuchenghao@163.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
     content = "this is the new suggest about 水杯"
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 ```
 使用schedule模块实现定时执行函数的功能。
 ##python与模块安装难点
-其实代码的实现不是特别难的事情，但是在服务器的运行还是比较麻烦的，在centos上的步骤如下，因为系统自带oython2.7千万别删除，因为yum是依赖于python2.7的：
+其实代码的实现不是特别难的事情，但是在服务器的运行还是比较麻烦的，在centos上的步骤如下，因为系统自带ython2.7千万别删除，因为yum是依赖于python2.7的：
 ```bash
 yum -y install zlib*
 yum install openssl-devel zilb-devel python3-devel
@@ -122,4 +122,4 @@ pip3 install schedule
 1. 对于想做淘宝的小商户来说最好一开始不要做竞争激烈的类目。
 2. 自然流量的关键点为标题、主图、宝贝详情。
 3. 本文的代码可以点击[链接](https://github.com/OnlyPiglet/python/tree/master/20190211)查看。
-4. 在centos上安装python3.6时注意，因为centos系统自带oython2.7千万别删除，因为yum是依赖于python2.7的。
+4. 在centos上安装python3.6时注意，因为centos系统自带python2.7千万别删除，因为yum是依赖于python2.7的。
